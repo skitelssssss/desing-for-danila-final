@@ -1,0 +1,251 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   LUXE BEAUTY — Biologique Recherche-inspired Design System
+   Palette: Off-white bg · Dark charcoal text · Indigo footer
+   Typography: Uppercase tracking-widest labels · Centered sections
+   Buttons: Thin 1px border, no fill, uppercase spaced
+   ============================================================ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0;
+
+  /* Core palette — BR-inspired */
+  --background:        oklch(0.985 0.003 80);      /* warm off-white #F8F7F4 */
+  --foreground:        oklch(0.18 0.005 60);        /* near-black charcoal #1C1B18 */
+  --card:              oklch(1 0 0);                /* pure white */
+  --card-foreground:   oklch(0.18 0.005 60);
+  --popover:           oklch(1 0 0);
+  --popover-foreground:oklch(0.18 0.005 60);
+
+  /* Primary = dark charcoal (for buttons) */
+  --primary:           oklch(0.18 0.005 60);
+  --primary-foreground:oklch(0.985 0.003 80);
+
+  /* Secondary = light warm grey */
+  --secondary:         oklch(0.94 0.004 80);
+  --secondary-foreground: oklch(0.18 0.005 60);
+
+  --muted:             oklch(0.94 0.004 80);
+  --muted-foreground:  oklch(0.52 0.01 60);
+
+  --accent:            oklch(0.94 0.004 80);
+  --accent-foreground: oklch(0.18 0.005 60);
+
+  --destructive:       oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --border:            oklch(0.85 0.005 80);
+  --input:             oklch(0.85 0.005 80);
+  --ring:              oklch(0.18 0.005 60);
+
+  /* Charts */
+  --chart-1: oklch(0.35 0.08 280);
+  --chart-2: oklch(0.45 0.1 280);
+  --chart-3: oklch(0.55 0.1 280);
+  --chart-4: oklch(0.65 0.08 280);
+  --chart-5: oklch(0.75 0.06 280);
+
+  /* Sidebar */
+  --sidebar:                oklch(0.985 0.003 80);
+  --sidebar-foreground:     oklch(0.18 0.005 60);
+  --sidebar-primary:        oklch(0.18 0.005 60);
+  --sidebar-primary-foreground: oklch(0.985 0.003 80);
+  --sidebar-accent:         oklch(0.94 0.004 80);
+  --sidebar-accent-foreground: oklch(0.18 0.005 60);
+  --sidebar-border:         oklch(0.85 0.005 80);
+  --sidebar-ring:           oklch(0.18 0.005 60);
+
+  /* Brand custom tokens */
+  --br-indigo:    #2D2B6E;   /* footer / announcement bar */
+  --br-indigo-light: #3D3B8E;
+  --br-charcoal:  #1C1B18;
+  --br-warm-white:#F8F7F4;
+  --br-light-grey:#F0EEE9;
+  --br-mid-grey:  #9A9690;
+  --br-divider:   #D8D5CF;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .container { padding-left: 2rem; padding-right: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .container { padding-left: 3rem; padding-right: 3rem; max-width: 1400px; }
+  }
+
+  /* ── BR-style section label ── */
+  .br-label {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--br-mid-grey);
+  }
+
+  /* ── Section title divider (short centered line) ── */
+  .br-divider {
+    width: 2rem;
+    height: 1px;
+    background: var(--br-charcoal);
+    margin: 0.75rem auto 0;
+  }
+
+  /* ── BR-style outlined button ── */
+  .btn-br {
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--br-charcoal);
+    border: 1px solid var(--br-charcoal);
+    padding: 0.875rem 2rem;
+    background: transparent;
+    transition: background 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+  }
+  .btn-br:hover {
+    background: var(--br-charcoal);
+    color: var(--br-warm-white);
+  }
+
+  /* ── BR-style white outlined button (for dark backgrounds) ── */
+  .btn-br-white {
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 0.875rem 2rem;
+    background: transparent;
+    transition: background 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+  }
+  .btn-br-white:hover {
+    background: #fff;
+    color: var(--br-charcoal);
+  }
+
+  /* ── Product card ── */
+  .br-card {
+    background: #fff;
+    transition: opacity 0.2s ease;
+  }
+  .br-card:hover { opacity: 0.88; }
+
+  /* ── Announcement bar ── */
+  .br-announcement {
+    background: var(--br-indigo);
+    color: #fff;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0.6rem 1rem;
+  }
+
+  /* ── Footer ── */
+  .br-footer {
+    background: var(--br-indigo);
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── Section heading style ── */
+  .br-section-title {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--br-charcoal);
+    text-align: center;
+  }
+}

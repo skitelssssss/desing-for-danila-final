@@ -1,9 +1,11 @@
-// LUXE BEAUTY — Products Page (MUI)
+// L'ART DE LA BEAUTÉ — Products Page (MUI)
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { StarRating } from "@/features/star-rating/ui/StarRating";
+import { formatPrice } from "@/shared/lib/formatPrice";
+import { CTA } from "@/widgets/cta/ui/CTA";
 import { PRODUCTS } from "@/entities/product";
 import { useCart } from "@/entities/cart";
 import Container from "@mui/material/Container";
@@ -87,7 +89,7 @@ function ProductCard({ product }: { product: typeof PRODUCTS[0] }) {
             {product.name}
           </Typography>
         </Link>
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5, mb: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0.5, mb: 1 }}>
           <StarRating rating={product.rating} />
           <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontSize: "0.65rem", color: "#9A9690" }}>
             {product.rating.toFixed(1)}
@@ -96,10 +98,10 @@ function ProductCard({ product }: { product: typeof PRODUCTS[0] }) {
         <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.68rem", color: "#1C1B18" }}>
           {product.originalPrice && (
             <span style={{ textDecoration: "line-through", color: "#9A9690", marginRight: "0.4rem" }}>
-              Br{product.originalPrice}
+              {formatPrice(product.originalPrice)}
             </span>
           )}
-          Br{product.price}
+          {formatPrice(product.price)}
         </Typography>
       </Box>
     </Box>
@@ -137,8 +139,8 @@ export default function Products() {
   return (
     <Box sx={{ bgcolor: "#F8F7F4", minHeight: "100vh" }}>
       {/* Page header */}
-      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff", borderBottom: "1px solid #F0EEE9" }}>
-        <Typography sx={{ ...labelSx, mb: 0.5 }}>Luxe Beauty</Typography>
+      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff" }}>
+        <Typography sx={{ ...labelSx, mb: 0.5 }}>L'art de la Beauté</Typography>
         <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "clamp(1.2rem, 3vw, 1.7rem)", letterSpacing: "0.28em", textTransform: "uppercase", color: "#1C1B18" }}>
           E-Boutique
         </Typography>
@@ -250,6 +252,13 @@ export default function Products() {
           </Box>
         )}
       </Container>
+
+      <CTA
+        label="Присоединяйтесь"
+        title="Начните свой путь к идеальной коже"
+        buttonLabel="Связаться с нами"
+        buttonHref="/contact"
+      />
     </Box>
   );
 }

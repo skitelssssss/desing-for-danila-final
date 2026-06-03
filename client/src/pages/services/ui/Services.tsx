@@ -1,7 +1,9 @@
-// LUXE BEAUTY — Services Page (MUI)
+// L'ART DE LA BEAUTÉ — Services Page (MUI)
 import { Link } from "wouter";
 import { useInView } from "@/shared/hooks/useInView";
 import { SERVICES } from "@/entities/service";
+import { formatPrice } from "@/shared/lib/formatPrice";
+import { CTA } from "@/widgets/cta/ui/CTA";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -32,8 +34,8 @@ export default function Services() {
   return (
     <Box sx={{ bgcolor: "#F8F7F4", minHeight: "100vh" }}>
       {/* Page header */}
-      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff", borderBottom: "1px solid #F0EEE9" }}>
-        <Typography sx={{ ...labelSx, mb: 0.5 }}>Luxe Beauty</Typography>
+      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff" }}>
+        <Typography sx={{ ...labelSx, mb: 0.5 }}>L'art de la Beauté</Typography>
         <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "clamp(1.2rem, 3vw, 1.7rem)", letterSpacing: "0.28em", textTransform: "uppercase", color: "#1C1B18" }}>
           Процедуры
         </Typography>
@@ -61,7 +63,7 @@ export default function Services() {
               </Typography>
               <Box sx={{ width: "2rem", height: "1px", bgcolor: "#1C1B18", mx: "auto", mb: 1.5 }} />
               <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "1rem", lineHeight: 1.9, color: "#6B6860", maxWidth: 520, mx: "auto", mb: 2, textAlign: "center" }}>
-                Каждая процедура разработана с учётом индивидуальных потребностей вашей кожи. Наши специалисты проводят тщательную диагностику, сочетая передовые технологии с проверенными методиками мирового уровня. Мы используем только премиальные продукты и персонализированный подход, чтобы достичь видимых и долгосрочных результатов. Доверьте свою красоту профессионалам Luxe Beauty.
+                Каждая процедура в L'art de la Beauté — индивидуальный протокол, подобранный под текущее состояние вашей кожи. Мы работаем на премиальных итальянских (Comfort Zone) и французских (PHYTOMER) брендах, используем современные технологии и проверенные методики. Доверьте свою кожу профессионалам нашей косметологии в Минске.
               </Typography>
             </Box>
           </Grid>
@@ -107,7 +109,7 @@ export default function Services() {
                       </Box>
                       <Box sx={{ textAlign: "right" }}>
                         <Typography sx={{ ...labelSx, mb: 0.25 }}>Стоимость</Typography>
-                        <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.8rem", color: "#1C1B18" }}>Br{service.price}</Typography>
+                        <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.8rem", color: "#1C1B18" }}>{formatPrice(service.price)}</Typography>
                       </Box>
                     </Box>
                   </Box>
@@ -149,17 +151,12 @@ export default function Services() {
       </Box>
 
       {/* CTA */}
-      <Box component="section" sx={{ bgcolor: "#0F1B3D", py: 10 }}>
-        <Container sx={{ textAlign: "center" }}>
-          <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.825rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", mb: 0.75 }}>
-            Начните сейчас
-          </Typography>
-          <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "clamp(1rem, 2vw, 1.3rem)", letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", mb: 0.75 }}>
-            Свяжитесь с нами
-          </Typography>
-          <Box sx={{ width: "2rem", height: "1px", bgcolor: "rgba(255,255,255,0.4)", mx: "auto", mb: 2 }} />
-        </Container>
-      </Box>
+      <CTA
+        label="Присоединяйтесь"
+        title="Запишитесь на персональную консультацию"
+        buttonLabel="Связаться с нами"
+        buttonHref="/contact"
+      />
     </Box>
   );
 }

@@ -1,6 +1,6 @@
-// LUXE BEAUTY — Footer (MUI)
+// L'ART DE LA BEAUTÉ — Footer (MUI)
 import { Link } from "wouter";
-import { Instagram, Facebook, Youtube } from "lucide-react";
+import { Instagram, Send } from "lucide-react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -11,16 +11,14 @@ import Divider from "@mui/material/Divider";
 
 const MAIN_MENU = [
   { label: "Главная", href: "/" },
-  { label: "E-Boutique", href: "/products" },
   { label: "Процедуры", href: "/services" },
-  { label: "О бренде", href: "/about" },
+  { label: "О нас", href: "/about" },
   { label: "Контакты", href: "/contact" },
 ];
 
 const INFO_LINKS = [
   "Политика конфиденциальности",
   "Политика возврата",
-  "Политика доставки",
   "Условия обслуживания",
   "Правовое уведомление",
 ];
@@ -49,14 +47,22 @@ const linkSx = {
   "&:hover": { color: "#fff" },
 };
 
+const PHONE = "+375 29 749-22-22";
+const PHONE_TEL = "+375297492222";
+const INSTAGRAM = "https://www.instagram.com/lart.de_la_beaute";
+const TELEGRAM = "https://t.me/l_art_de_la_beaute";
+const VIBER = "viber://chat?number=%2B375297492222";
+const ADDRESS = "Минск, ул. Тимирязева, 122";
+const HOURS = "Пн–Сб 09:00–21:00 · Вс 09:00–18:00";
+
 export default function Footer() {
   return (
     <Box component="footer" sx={{ bgcolor: "#0F1B3D" }}>
       <Container sx={{ py: 8 }}>
         <Grid container spacing={6}>
           {/* Column 1: Main Menu */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Typography component="span" sx={colLabelSx}>Главное меню</Typography>
+          <Grid size={{ xs: 12, md: 3 }}>
+            <Typography component="span" sx={colLabelSx}>Меню</Typography>
             {MAIN_MENU.map((item) => (
               <Link key={item.href} href={item.href}>
                 <Typography component="span" sx={linkSx}>
@@ -79,7 +85,26 @@ export default function Footer() {
                 mb: 1.5,
               }}
             >
-              Luxe Beauty — бутик премиальной косметики и профессиональных процедур по уходу за кожей. Индивидуальный подход и продукты высочайшего качества.
+              L'art de la Beauté — косметология в Минске. Профессиональный уход за кожей лица на премиальных брендах Comfort Zone и PHYTOMER. Эстетическая косметология с индивидуальным подходом.
+            </Typography>
+            <MuiLink
+              href={`tel:${PHONE_TEL}`}
+              underline="none"
+              sx={{ ...linkSx, color: "rgba(255,255,255,0.85)", mb: 0.5 }}
+            >
+              {PHONE}
+            </MuiLink>
+            <Typography
+              sx={{
+                fontFamily: "'Nunito', sans-serif",
+                fontWeight: 400,
+                fontSize: "0.72rem",
+                letterSpacing: "0.08em",
+                color: "rgba(255,255,255,0.4)",
+                mb: 0.5,
+              }}
+            >
+              {ADDRESS}
             </Typography>
             <Typography
               sx={{
@@ -90,20 +115,24 @@ export default function Footer() {
                 color: "rgba(255,255,255,0.4)",
               }}
             >
-              ул. Независимости, 12, Минск, Беларусь
+              {HOURS}
             </Typography>
-            <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
-              {[Instagram, Facebook, Youtube].map((Icon, i) => (
-                <IconButton key={i} sx={{ color: "rgba(255,255,255,0.4)", "&:hover": { color: "#fff" } }}>
-                  <Icon size={15} strokeWidth={1.5} />
-                </IconButton>
-              ))}
+            <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
+              <IconButton component="a" href={INSTAGRAM} target="_blank" rel="noopener noreferrer" sx={{ color: "rgba(255,255,255,0.4)", "&:hover": { color: "#fff" } }} aria-label="Instagram">
+                <Instagram size={15} strokeWidth={1.5} />
+              </IconButton>
+              <IconButton component="a" href={TELEGRAM} target="_blank" rel="noopener noreferrer" sx={{ color: "rgba(255,255,255,0.4)", "&:hover": { color: "#fff" } }} aria-label="Telegram">
+                <Send size={15} strokeWidth={1.5} />
+              </IconButton>
+              <IconButton component="a" href={VIBER} sx={{ color: "rgba(255,255,255,0.4)", "&:hover": { color: "#fff" } }} aria-label="Viber">
+                <Box component="span" sx={{ fontSize: "0.62rem", letterSpacing: "0.1em", fontFamily: "'Nunito', sans-serif", textTransform: "uppercase" }}>Viber</Box>
+              </IconButton>
             </Box>
           </Grid>
 
           {/* Column 3: Info */}
           <Grid
-            size={{ xs: 12, md: 4 }}
+            size={{ xs: 12, md: 5 }}
             sx={{ borderLeft: { md: "1px solid rgba(255,255,255,0.1)" }, pl: { md: 4 } }}
           >
             <Typography component="span" sx={colLabelSx}>Информация</Typography>
@@ -117,6 +146,20 @@ export default function Footer() {
                 {item}
               </MuiLink>
             ))}
+            <Typography
+              sx={{
+                fontFamily: "'Nunito', sans-serif",
+                fontWeight: 400,
+                fontSize: "0.72rem",
+                letterSpacing: "0.08em",
+                color: "rgba(255,255,255,0.35)",
+                mt: 3,
+                lineHeight: 1.9,
+              }}
+            >
+              Метро «Ратомская» — 440 м.<br />
+              Онлайн-запись через Telegram и Viber.
+            </Typography>
           </Grid>
         </Grid>
       </Container>
@@ -135,10 +178,10 @@ export default function Footer() {
               color: "rgba(255,255,255,0.35)",
             }}
           >
-            © Luxe Beauty 2026
+            © L'art de la Beauté 2026
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            {["Visa", "MC", "PayPal", "Apple Pay"].map((m) => (
+            {["Visa", "Mastercard", "Наличные"].map((m) => (
               <Typography
                 key={m}
                 component="span"

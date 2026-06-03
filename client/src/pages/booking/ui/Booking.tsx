@@ -1,8 +1,10 @@
-// LUXE BEAUTY — Booking Page (MUI)
+// L'ART DE LA BEAUTÉ — Booking Page (MUI)
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { SERVICES } from "@/entities/service";
+import { formatPrice } from "@/shared/lib/formatPrice";
+import { CTA } from "@/widgets/cta/ui/CTA";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -84,8 +86,8 @@ export default function Booking() {
   return (
     <Box sx={{ bgcolor: "#F8F7F4", minHeight: "100vh" }}>
       {/* Page header */}
-      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff", borderBottom: "1px solid #F0EEE9" }}>
-        <Typography sx={{ ...labelSx, mb: 0.5 }}>Luxe Beauty</Typography>
+      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff" }}>
+        <Typography sx={{ ...labelSx, mb: 0.5 }}>L'art de la Beauté</Typography>
         <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "clamp(1.2rem, 3vw, 1.7rem)", letterSpacing: "0.28em", textTransform: "uppercase", color: "#1C1B18" }}>
           Запись на консультацию
         </Typography>
@@ -156,7 +158,7 @@ export default function Booking() {
                       </Typography>
                     </Box>
                     <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "1rem", color: selectedService === service.id ? "#fff" : "#1C1B18" }}>
-                      Br{service.price}
+                      {formatPrice(service.price)}
                     </Typography>
                   </Button>
                 ))}
@@ -278,6 +280,13 @@ export default function Booking() {
           )}
         </Box>
       </Container>
+
+      <CTA
+        label="Присоединяйтесь"
+        title="Не нашли подходящую процедуру?"
+        buttonLabel="Связаться с нами"
+        buttonHref="/contact"
+      />
     </Box>
   );
 }

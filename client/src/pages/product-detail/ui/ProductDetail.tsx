@@ -1,9 +1,11 @@
-// LUXE BEAUTY — Product Detail (MUI)
+// L'ART DE LA BEAUTÉ — Product Detail (MUI)
 import { useState } from "react";
 import { useParams, Link } from "wouter";
 import { ChevronLeft } from "lucide-react";
 import { toast } from "sonner";
 import { StarRating } from "@/features/star-rating/ui/StarRating";
+import { formatPrice } from "@/shared/lib/formatPrice";
+import { CTA } from "@/widgets/cta/ui/CTA";
 import { PRODUCTS } from "@/entities/product";
 import { useCart } from "@/entities/cart";
 import Container from "@mui/material/Container";
@@ -43,7 +45,7 @@ export default function ProductDetail() {
   return (
     <Box sx={{ bgcolor: "#F8F7F4", minHeight: "100vh" }}>
       {/* Breadcrumb */}
-      <Box sx={{ bgcolor: "#fff", borderBottom: "1px solid #F0EEE9" }}>
+      <Box sx={{ bgcolor: "#fff" }}>
         <Container sx={{ py: 2 }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <Link href="/products">
@@ -105,11 +107,11 @@ export default function ProductDetail() {
 
               <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
                 <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "1.15rem", letterSpacing: "0.1em", color: "#1C1B18" }}>
-                  Br{product.price}
+                  {formatPrice(product.price)}
                 </Typography>
                 {product.originalPrice && (
                   <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.8rem", color: "#9A9690", textDecoration: "line-through" }}>
-                    Br{product.originalPrice}
+                    {formatPrice(product.originalPrice)}
                   </Typography>
                 )}
               </Box>
@@ -226,7 +228,7 @@ export default function ProductDetail() {
                           {p.name}
                         </Typography>
                         <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.72rem", color: "#9A9690" }}>
-                          Br{p.price}
+                          {formatPrice(p.price)}
                         </Typography>
                       </Box>
                     </Box>
@@ -237,6 +239,13 @@ export default function ProductDetail() {
           </Box>
         )}
       </Container>
+
+      <CTA
+        label="Присоединяйтесь"
+        title="Начните свой путь к идеальной коже"
+        buttonLabel="Связаться с нами"
+        buttonHref="/contact"
+      />
     </Box>
   );
 }

@@ -1,6 +1,7 @@
-// LUXE BEAUTY — About Page (MUI)
+// L'ART DE LA BEAUTÉ — About Page (MUI)
 import { Link } from "wouter";
 import { useInView } from "@/shared/hooks/useInView";
+import { CTA } from "@/widgets/cta/ui/CTA";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -8,25 +9,25 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
 const TEAM = [
-  { name: "Мария Соколова", role: "Основатель & Главный эксперт", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&q=80" },
-  { name: "Анна Петрова", role: "Старший косметолог", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" },
-  { name: "Елена Кузнецова", role: "Специалист по уходу за кожей", image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=600&q=80" },
-  { name: "Ольга Иванова", role: "Beauty-консультант", image: "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?w=600&q=80" },
+  { name: "Татьяна", role: "Ведущий косметолог", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&q=80" },
+  { name: "Анна", role: "Косметолог-эстетист", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" },
+  { name: "Елена", role: "Специалист по пилингам", image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=600&q=80" },
+  { name: "Ольга", role: "Администратор", image: "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?w=600&q=80" },
 ];
 
 const VALUES = [
-  { num: "01", title: "Наука", desc: "Каждый продукт и процедура основаны на передовых научных исследованиях и клинически доказанных результатах." },
-  { num: "02", title: "Индивидуальность", desc: "Мы верим, что красота уникальна. Каждый клиент получает персональный подход и индивидуальный протокол ухода." },
-  { num: "03", title: "Качество", desc: "Только лучшие ингредиенты, только проверенные методики. Компромисс с качеством для нас недопустим." },
-  { num: "04", title: "Результат", desc: "Видимый и долгосрочный результат — главный критерий нашей работы. Мы сопровождаем вас на каждом этапе." },
+  { num: "01", title: "Экспертиза", desc: "Косметологи с профильным образованием и многолетним опытом работы на профессиональных брендах Comfort Zone и PHYTOMER." },
+  { num: "02", title: "Индивидуальный подход", desc: "Каждый визит начинается с диагностики состояния кожи. Протокол процедуры подбирается под ваши задачи и особенности." },
+  { num: "03", title: "Премиальные бренды", desc: "Работаем только с профессиональной косметикой Comfort Zone (Италия) и PHYTOMER (Франция) — лидерами эстетической косметологии." },
+  { num: "04", title: "Забота о клиенте", desc: "Уютная атмосфера, Wi-Fi, парковка, оплата картой. Онлайн-запись, напоминания и индивидуальные рекомендации после процедур." },
 ];
 
 const TIMELINE = [
-  { year: "2010", text: "Основание Luxe Beauty в Минске. Первый салон на улице Независимости." },
-  { year: "2014", text: "Запуск собственной линейки косметики на основе натуральных активных компонентов." },
-  { year: "2018", text: "Открытие второго салона. Партнёрство с ведущими европейскими лабораториями." },
-  { year: "2022", text: "Запуск онлайн-платформы и доставки продуктов по всей Беларуси." },
-  { year: "2024", text: "Более 50 000 довольных клиентов. Расширение линейки до 80+ продуктов." },
+  { year: "2010-е", text: "Открытие косметологии L'art de la Beauté на улице Тимирязева, 122 в Минске." },
+  { year: "2015", text: "Партнёрство с итальянским брендом Comfort Zone и французским PHYTOMER." },
+  { year: "2018", text: "Расширение спектра услуг: пилинги, массаж лица, программы BR с масками Visolastin+ и Vip O2." },
+  { year: "2022", text: "Запуск онлайн-записи через Telegram и Viber. Удобные форматы записи для занятых клиентов." },
+  { year: "Сегодня", text: "Рейтинг 4.3 на Яндекс Картах, сотни постоянных клиентов и индивидуальный подход к каждому визиту." },
 ];
 
 const labelSx = { fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#9A9690" };
@@ -50,8 +51,8 @@ export default function About() {
   return (
     <Box sx={{ bgcolor: "#F8F7F4", minHeight: "100vh" }}>
       {/* Page header */}
-      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff", borderBottom: "1px solid #F0EEE9" }}>
-        <Typography sx={{ ...labelSx, mb: 0.5 }}>Luxe Beauty</Typography>
+      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff" }}>
+        <Typography sx={{ ...labelSx, mb: 0.5 }}>L'art de la Beauté</Typography>
         <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "clamp(1.2rem, 3vw, 1.7rem)", letterSpacing: "0.28em", textTransform: "uppercase", color: "#1C1B18" }}>
           О нас
         </Typography>
@@ -77,7 +78,7 @@ export default function About() {
               <Typography sx={{ ...h2Sx, mb: 0.75 }}>Красота как наука</Typography>
               <Box sx={{ width: "2rem", height: "1px", bgcolor: "#1C1B18", mx: "auto", mb: 1.5 }} />
               <Typography sx={{ ...bodySx, maxWidth: 520, mx: "auto", mb: 2, textAlign: "center" }}>
-                Luxe Beauty основан в 2010 году с одной целью — объединить передовую науку и искусство ухода за кожей. Мы убеждены, что каждый человек заслуживает профессионального, персонализированного подхода к красоте. За 14 лет мы помогли более чем 50 000 клиентов обрести уверенность в себе и достичь видимых результатов. Наши специалисты постоянно совершенствуют знания и применяют только проверенные методики.
+                L'art de la Beauté — косметология в Минске на улице Тимирязева, 122. Мы объединили искусство профессионального ухода за кожей и косметику премиальных брендов Comfort Zone (Италия) и PHYTOMER (Франция). Каждый визит — это индивидуальный протокол: диагностика состояния кожи, подбор процедуры и домашнего ухода. Наши косметологи регулярно повышают квалификацию, чтобы вы получали лучшие мировые методики эстетической медицины.
               </Typography>
             </Box>
           </Grid>
@@ -194,19 +195,12 @@ export default function About() {
       </Box>
 
       {/* CTA */}
-      <Box component="section" sx={{ bgcolor: "#0F1B3D", py: 10 }}>
-        <Container sx={{ textAlign: "center" }}>
-          <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.825rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", mb: 0.75 }}>
-            Присоединяйтесь
-          </Typography>
-          <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "clamp(1rem, 2vw, 1.3rem)", letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff", mb: 0.75 }}>
-            Начните свой путь к идеальной коже
-          </Typography>
-          <Box sx={{ width: "2rem", height: "1px", bgcolor: "rgba(255,255,255,0.4)", mx: "auto", mb: 2 }} />
-          <Link href="/contact">
-          </Link>
-        </Container>
-      </Box>
+      <CTA
+        label="Присоединяйтесь"
+        title="Начните свой путь к идеальной коже"
+        buttonLabel="Связаться с нами"
+        buttonHref="/contact"
+      />
     </Box>
   );
 }

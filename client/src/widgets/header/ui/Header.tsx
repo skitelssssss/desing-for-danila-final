@@ -1,14 +1,12 @@
-// LUXE BEAUTY — Header (MUI AppBar + Drawer)
-import { useState, useEffect } from "react";
+// L'ART DE LA BEAUTÉ — Header (MUI AppBar)
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
-import { ShoppingBag, Search, X } from "lucide-react";
+import { ShoppingBag, ChevronDown } from "lucide-react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import Drawer from "@mui/material/Drawer";
 import { useCart } from "@/entities/cart";
 
 const NAV_LINKS = [
@@ -16,14 +14,15 @@ const NAV_LINKS = [
   { href: "/products", label: "E-Boutique" },
   { href: "/services", label: "Процедуры" },
   { href: "/about", label: "О бренде" },
-  { href: "/contact", label: "Наши адреса" },
+  { href: "/contact", label: "Контакты" },
 ];
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [location] = useLocation();
   const { totalItems } = useCart();
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -33,7 +32,26 @@ export default function Header() {
 
   useEffect(() => { setMenuOpen(false); }, [location]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
+
   const isActive = (href: string) => location === href;
+  const currentLabel = NAV_LINKS.find((l) => l.href === location)?.label ?? "Главная";
 
   return (
     <>
@@ -45,35 +63,133 @@ export default function Header() {
           borderBottom: `1px solid ${scrolled ? "#E8E5DF" : "#F0EEE9"}`,
         }}
       >
-        <Container>
+        <Container disableGutters sx={{ position: "relative", px: { xs: 2, md: 4 } }}>
           <Toolbar disableGutters sx={{ height: { xs: 64, md: 80 }, justifyContent: "space-between" }}>
-            {/* Mobile hamburger */}
-            <IconButton
-              onClick={() => setMenuOpen(true)}
-              aria-label="Открыть меню"
-              sx={{ display: { md: "none" } }}
-            >
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 0.375 }}>
-                {[0, 1, 2].map((i) => (
-                  <Box key={i} sx={{ width: 20, height: 1, bgcolor: "#1C1B18" }} />
-                ))}
+            {/* Mobile custom dropdown */}
+            <Box ref={menuRef} sx={{ display: { xs: "block", md: "none" }, position: "relative" }}>
+              <Box
+                component="button"
+                onClick={() => setMenuOpen((v) => !v)}
+                aria-haspopup="listbox"
+                aria-expanded={menuOpen}
+                aria-label="Меню"
+                sx={{
+                  display: "flex", alignItems: "center", gap: 1.25,
+                  fontFamily: "'Nunito', sans-serif",
+                  fontWeight: 400,
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "#1C1B18",
+                  bgcolor: "transparent",
+                  border: "1px solid #E8E5DF",
+                  borderRadius: 999,
+                  py: 0.85,
+                  pl: 1.75,
+                  pr: 1.25,
+                  cursor: "pointer",
+                  outline: "none",
+                  transition: "border-color 0.25s ease, background 0.25s ease",
+                  "&:hover": { borderColor: "#1C1B18" },
+                  "&:focus-visible": { borderColor: "#1C1B18" },
+                }}
+              >
+                <Box component="span" sx={{ whiteSpace: "nowrap" }}>{currentLabel}</Box>
+                <ChevronDown
+                  size={14}
+                  strokeWidth={1.5}
+                  style={{
+                    transition: "transform 0.3s ease",
+                    transform: menuOpen ? "rotate(180deg)" : "rotate(0deg)",
+                  }}
+                />
               </Box>
-            </IconButton>
+
+              <Box
+                role="listbox"
+                sx={{
+                  position: "absolute",
+                  top: "calc(100% + 10px)",
+                  left: 0,
+                  minWidth: 240,
+                  bgcolor: "#fff",
+                  border: "1px solid #E8E5DF",
+                  boxShadow: "0 16px 48px rgba(28,27,24,0.10)",
+                  opacity: menuOpen ? 1 : 0,
+                  transform: menuOpen ? "translateY(0) scale(1)" : "translateY(-6px) scale(0.98)",
+                  transformOrigin: "top left",
+                  pointerEvents: menuOpen ? "auto" : "none",
+                  transition: "opacity 0.22s ease, transform 0.22s ease",
+                  zIndex: 20,
+                  overflow: "hidden",
+                }}
+              >
+                {NAV_LINKS.map((link, idx) => {
+                  const active = isActive(link.href);
+                  return (
+                    <Link key={link.href} href={link.href}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          gap: 2,
+                          px: 2.25,
+                          py: 1.5,
+                          borderBottom: idx < NAV_LINKS.length - 1 ? "1px solid #F0EEE9" : "none",
+                          bgcolor: active ? "#F8F7F4" : "transparent",
+                          cursor: "pointer",
+                          transition: "background 0.2s ease, padding-left 0.2s ease",
+                          "&:hover": { bgcolor: "#F8F7F4", pl: 2.75 },
+                          "&:hover .menu-arrow": { opacity: 1, transform: "translateX(0)" },
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            fontFamily: "'Nunito', sans-serif",
+                            fontWeight: active ? 500 : 400,
+                            fontSize: "0.7rem",
+                            letterSpacing: "0.2em",
+                            textTransform: "uppercase",
+                            color: "#1C1B18",
+                          }}
+                        >
+                          {link.label}
+                        </Typography>
+                        <Box
+                          className="menu-arrow"
+                          component="span"
+                          sx={{
+                            color: "#9A9690",
+                            fontSize: "0.85rem",
+                            opacity: active ? 1 : 0,
+                            transform: active ? "translateX(0)" : "translateX(-4px)",
+                            transition: "opacity 0.2s ease, transform 0.2s ease",
+                          }}
+                        >
+                          →
+                        </Box>
+                      </Box>
+                    </Link>
+                  );
+                })}
+              </Box>
+            </Box>
 
             {/* Logo */}
             <Link href="/">
               <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", lineHeight: 1, gap: 0.25, cursor: "pointer" }}>
-                <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "1.125rem", letterSpacing: "0.45em", textTransform: "uppercase", color: "#1C1B18" }}>
-                  LUXE
+                <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.95rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "#1C1B18" }}>
+                  L'Art de la
                 </Typography>
-                <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.69rem", letterSpacing: "0.5em", textTransform: "uppercase", color: "#1C1B18" }}>
-                  BEAUTY
+                <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.95rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "#1C1B18" }}>
+                  Beauté
                 </Typography>
               </Box>
             </Link>
 
-            {/* Desktop nav */}
-            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 4 }}>
+            {/* Desktop nav — centered */}
+            <Box sx={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", display: { xs: "none", md: "flex" }, gap: 4 }}>
               {NAV_LINKS.map((link) => (
                 <Link key={link.href} href={link.href}>
                   <Typography
@@ -97,9 +213,6 @@ export default function Header() {
 
             {/* Right icons */}
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <IconButton aria-label="Поиск" sx={{ color: "#1C1B18", "&:hover": { opacity: 0.5 } }}>
-                <Search size={17} strokeWidth={1.5} />
-              </IconButton>
               <Link href="/cart">
                 <Box sx={{ position: "relative", color: "#1C1B18", "&:hover": { opacity: 0.5 }, cursor: "pointer" }}>
                   <ShoppingBag size={17} strokeWidth={1.5} />
@@ -120,58 +233,6 @@ export default function Header() {
           </Toolbar>
         </Container>
       </AppBar>
-
-      {/* Mobile Drawer */}
-      <Drawer
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        sx={{ display: { md: "none" } }}
-        slotProps={{ paper: { sx: { width: "100%", bgcolor: "#fff" } } }}
-      >
-        <Container sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-            <IconButton onClick={() => setMenuOpen(false)} sx={{ color: "#1C1B18" }}>
-              <X size={18} strokeWidth={1.5} />
-            </IconButton>
-            <Link href="/">
-              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", lineHeight: 1, gap: 0.25 }}>
-                <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "1.125rem", letterSpacing: "0.45em", color: "#1C1B18" }}>LUXE</Typography>
-                <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.69rem", letterSpacing: "0.5em", color: "#1C1B18" }}>BEAUTY</Typography>
-              </Box>
-            </Link>
-            <Box sx={{ width: 18 }} />
-          </Box>
-
-          {/* Nav links */}
-          <Box sx={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            {NAV_LINKS.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <Box
-                  sx={{
-                    py: 2, display: "flex", alignItems: "center", justifyContent: "space-between",
-                    borderBottom: "1px solid #F0EEE9",
-                    opacity: isActive(link.href) ? 1 : 0.55,
-                    transition: "opacity 0.2s",
-                    "&:hover": { opacity: 1 },
-                  }}
-                >
-                  <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.72rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#1C1B18" }}>
-                    {link.label}
-                  </Typography>
-                  <Typography sx={{ color: "#9A9690", fontSize: "0.825rem" }}>→</Typography>
-                </Box>
-              </Link>
-            ))}
-          </Box>
-
-          {/* Drawer footer */}
-          <Box sx={{ pb: 4 }}>
-            <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.825rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#9A9690" }}>
-              © 2026 Luxe Beauty
-            </Typography>
-          </Box>
-        </Container>
-      </Drawer>
     </>
   );
 }

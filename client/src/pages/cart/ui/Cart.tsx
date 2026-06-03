@@ -1,7 +1,9 @@
-// LUXE BEAUTY — Cart Page (MUI)
+// L'ART DE LA BEAUTÉ — Cart Page (MUI)
 import { Link } from "wouter";
 import { ShoppingBag, Trash2, Minus, Plus, ChevronLeft } from "lucide-react";
 import { useCart } from "@/entities/cart";
+import { formatPrice } from "@/shared/lib/formatPrice";
+import { CTA } from "@/widgets/cta/ui/CTA";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -19,8 +21,8 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <Box sx={{ bgcolor: "#F8F7F4", minHeight: "100vh" }}>
-        <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff", borderBottom: "1px solid #F0EEE9" }}>
-          <Typography sx={{ ...labelSx, mb: 0.5 }}>Luxe Beauty</Typography>
+        <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff" }}>
+          <Typography sx={{ ...labelSx, mb: 0.5 }}>L'art de la Beauté</Typography>
           <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "clamp(1.2rem, 3vw, 1.7rem)", letterSpacing: "0.28em", textTransform: "uppercase", color: "#1C1B18" }}>
             Корзина
           </Typography>
@@ -48,7 +50,7 @@ export default function Cart() {
   return (
     <Box sx={{ bgcolor: "#F8F7F4", minHeight: "100vh" }}>
       {/* Page header */}
-      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff", borderBottom: "1px solid #F0EEE9" }}>
+      <Box sx={{ textAlign: "center", py: 3, bgcolor: "#fff" }}>
         <Typography sx={{ ...labelSx, mb: 0.5 }}>Luxe Beauty</Typography>
         <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "clamp(1.2rem, 3vw, 1.7rem)", letterSpacing: "0.28em", textTransform: "uppercase", color: "#1C1B18" }}>
           Корзина
@@ -95,7 +97,7 @@ export default function Cart() {
                     </Typography>
                   </Link>
                   <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.65rem", color: "#9A9690" }}>
-                    Br{item.price}
+                    {formatPrice(item.price)}
                   </Typography>
                 </Box>
 
@@ -120,7 +122,7 @@ export default function Cart() {
 
                 {/* Line total */}
                 <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.825rem", letterSpacing: "0.05em", color: "#1C1B18", minWidth: 72, textAlign: "right" }}>
-                  Br{(item.price * item.quantity).toLocaleString()}
+                  {formatPrice(item.price * item.quantity)}
                 </Typography>
 
                 {/* Remove */}
@@ -146,8 +148,8 @@ export default function Cart() {
           </Grid>
 
           {/* Order summary */}
-          <Grid size={{ xs: 12, lg: 4 }}>
-            <Paper sx={{ bgcolor: "#fff", border: "1px solid #E8E5DF", borderRadius: 0, p: 3 }}>
+          <Grid size={{ xs: 12, lg: 4 }} sx={{ pt: 12 }}>
+            <Paper variant="outlined" sx={{ borderColor: "#E8E5DF", borderRadius: 0, p: 2 }}>
               <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.825rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#1C1B18", mb: 2 }}>
                 Сумма заказа
               </Typography>
@@ -157,7 +159,7 @@ export default function Cart() {
                   Товары ({totalItems})
                 </Typography>
                 <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "0.65rem", color: "#1C1B18" }}>
-                  Br{totalPrice.toLocaleString()}
+                  {formatPrice(totalPrice)}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
@@ -176,7 +178,7 @@ export default function Cart() {
                   Итого
                 </Typography>
                 <Typography sx={{ fontFamily: "'Nunito', sans-serif", fontWeight: 400, fontSize: "1rem", letterSpacing: "0.05em", color: "#1C1B18" }}>
-                  Br{totalPrice.toLocaleString()}
+                  {formatPrice(totalPrice)}
                 </Typography>
               </Box>
 
@@ -193,6 +195,13 @@ export default function Cart() {
           </Grid>
         </Grid>
       </Container>
+
+      <CTA
+        label="Присоединяйтесь"
+        title="Нужна помощь с заказом?"
+        buttonLabel="Связаться с нами"
+        buttonHref="/contact"
+      />
     </Box>
   );
 }
